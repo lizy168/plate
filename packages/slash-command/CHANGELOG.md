@@ -1,5 +1,16 @@
 # @platejs/slash-command
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) –
+  - Expose Slash plugins through the Plite-native plugin contract
+  - Register slash-input values in compiled schemas
+  - Install the slash-input descriptor as a required plugin dependency
+  - Use `slashCommand` and `slashInput` as plugin identities while preserving
+    `slash_input` transient elements
+
 ## 53.0.0
 
 ## 52.3.10

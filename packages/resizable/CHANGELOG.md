@@ -1,5 +1,13 @@
 # @platejs/resizable
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Move resize components to the current editor hooks and mutation APIs, and restrict relative resize lengths to percentage strings
+
+  **Migration:** Remove the unused `readOnly` resizable option and use percentage strings for relative lengths.
+
 ## 53.0.0
 
 ## 52.3.10

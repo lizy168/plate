@@ -1,5 +1,15 @@
 # @platejs/tag
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Move tag insertion to `editor.update.tag.insert`, read selected items through
+  `editor.read.tag.getSelectedItems`, and compare values through
+  `editor.read.tag.isEqual`. Run multi-select behavior through Plite
+  transactions, register tag values in compiled schemas, and remove standalone
+  tag query helpers.
+
 ## 53.0.0
 
 ## 52.3.10

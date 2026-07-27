@@ -1,5 +1,14 @@
 # @platejs/comment
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Read comment marks through `editor.read.comment`, derive IDs with
+  `editor.api.comment.nodeId`, and mutate comments through
+  `editor.update.comment`. Register comment marks as boolean text properties in
+  compiled schemas.
+
 ## 53.0.0
 
 ## 52.3.10

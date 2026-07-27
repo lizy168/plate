@@ -1,5 +1,31 @@
 # @platejs/suggestion
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Move suggestion queries and mutations to `BaseSuggestionPlugin` and the
+  installed editor API, and register suggestion marks and metadata in compiled
+  schemas with versioned inline validation.
+
+  **Migration:** Read pure value helpers from `editor.api.suggestion`, snapshot
+  queries from `editor.read.suggestion`, and mutations from
+  `editor.update.suggestion`:
+
+  ```tsx
+  const identity = editor.api.suggestion.createIdentity();
+  const fragment = editor.api.suggestion.createFragment(input, identity);
+  const entries = editor.read.suggestion.nodes();
+
+  editor.update.suggestion.accept(description);
+  editor.update.suggestion.reject(description);
+  editor.update.suggestion.setNodes(options);
+  ```
+
+  Use `SuggestionUpdatePolicy.skip` for updates that bypass suggestion tracking
+  and `SUGGESTION_TRANSIENT_KEY` for transient metadata. Remove `withSuggestion`
+  and standalone suggestion query, transform, and utility imports.
+
 ## 53.0.3
 
 ### Patch Changes

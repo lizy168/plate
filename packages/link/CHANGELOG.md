@@ -1,5 +1,29 @@
 # @platejs/link
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Move link behavior to `BaseLinkPlugin`, `LinkPlugin`, and the installed editor
+  API, register link properties in compiled schemas, and use the readable
+  descriptor key `link` while preserving the serialized element type `a`.
+
+  **Migration:** Replace standalone link transforms with `editor.update.link`:
+
+  ```tsx
+  editor.update.link.insert(node, options);
+  editor.update.link.unwrap(options);
+  editor.update.link.upsert(options);
+  editor.update.link.upsertText(options);
+  editor.update.link.wrap(options);
+  ```
+
+  Read URL validation and anchor attributes from
+  `editor.api.link`. Control floating-link state through the same namespace.
+  Remove `withLink`, `insertLink`, `unwrapLink`,
+  `upsertLink`, `upsertLinkText`, `wrapLink`, `submitFloatingLink`, and
+  `triggerFloatingLink*` imports.
+
 ## 53.0.3
 
 ### Patch Changes

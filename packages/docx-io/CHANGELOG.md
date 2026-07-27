@@ -1,5 +1,25 @@
 # @platejs/docx-io
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Use `DocxIOPlugin` for editor-aware import and explicit-snapshot export. Keep
+  download as the standalone `downloadDocx` browser service.
+
+  ```tsx
+  const docx = editor.plugin(DocxIOPlugin);
+  const blob = await docx.api.toBlob(editor.read.children());
+
+  downloadDocx(blob, "document");
+
+  const imported = await docx.api.import(arrayBuffer);
+  ```
+
+  Use `Margins` and `DocumentOptions` for HTML-to-DOCX options. Remove the
+  `DocumentMargins`, `HtmlToDocxOptions`, `DocxExportPlugin`,
+  `exportEditorToDocx`, and root `docxExport` API.
+
 ## 53.1.0
 
 ### Minor Changes

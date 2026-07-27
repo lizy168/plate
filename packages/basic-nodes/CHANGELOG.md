@@ -1,5 +1,38 @@
 # @platejs/basic-nodes
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Remove the Heading, Basic Blocks, and Basic Marks grouping descriptors and
+  package-owned preset arrays. The package exports each Base and React capability
+  plugin independently. Built-in marks use compiled schema properties.
+  `ScriptPlugin` represents subscript and superscript through one
+  `script: 'sub' | 'sup'` property.
+
+  **Migration:** List the package plugins your editor supports, or install the
+  matching app-owned Plate registry kit.
+
+  ```tsx
+  import { H1Plugin, H2Plugin } from "@platejs/basic-nodes/react";
+
+  const plugins = [H1Plugin, H2Plugin];
+  ```
+
+  Replace `SubscriptPlugin` and `SuperscriptPlugin` with `ScriptPlugin`. Toggle
+  the requested position with `editor.update.script.toggle('sub' | 'sup')`.
+
+  Add the versioned migration plugin while loading persisted pre-v54 text marks:
+
+  ```tsx
+  import { ScriptV54MigrationPlugin } from "@platejs/basic-nodes/migrations";
+  import { ScriptPlugin } from "@platejs/basic-nodes/react";
+
+  const plugins = [ScriptV54MigrationPlugin, ScriptPlugin];
+  ```
+
+  Remove `ScriptV54MigrationPlugin` after every persisted document is resaved.
+
 ## 53.0.0
 
 ### Major Changes

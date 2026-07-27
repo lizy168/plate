@@ -1,5 +1,25 @@
 # @platejs/diff
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Keep inserted and deleted replacement markers on their exact text ranges.
+  Preserve exact formatting boundaries and JSON-compatible property removals in
+  derived diff spans.
+
+  Use `createExcludeDiffFragmentExtension` to exclude diff markers from copied
+  fragments and `excludeDiffFromFragment` for direct fragment cleanup.
+
+  Install the extension through a Plate plugin:
+
+  ```tsx
+  createBasePlugin({
+    extension: createExcludeDiffFragmentExtension(),
+    key: "diff",
+  });
+  ```
+
 ## 53.0.0
 
 ## 52.3.10

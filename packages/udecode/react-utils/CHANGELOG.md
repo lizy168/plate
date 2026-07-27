@@ -1,5 +1,17 @@
 # @udecode/react-utils
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) –
+
+  - Remove `useEffectOnce`, `useMemoizedSelector`, `useStableMemo`, and `withRef`
+  - Fix portal containers, hidden slot primitives, callback refs, and
+    outside-click listener lifecycles
+
+  **Migration:** Use React effects, memoization, external-store selectors, and ref props directly.
+
 ## 52.3.4
 
 ### Patch Changes

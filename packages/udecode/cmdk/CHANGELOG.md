@@ -1,5 +1,11 @@
 # @udecode/cmdk
 
+## 1.0.3-beta.0
+
+### Patch Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Fix `aria-activedescendant` updates after command selection changes
+
 ## 1.0.2
 
 ### Patch Changes

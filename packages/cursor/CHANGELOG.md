@@ -1,5 +1,14 @@
 # @platejs/cursor
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Accept Plite `DOMEditor` and text selections in cursor geometry helpers.
+
+  **Migration:** Replace `Editor` annotations used with cursor geometry helpers
+  with `DOMEditor` from `@platejs/plite-dom`.
+
 ## 53.0.0
 
 ## 52.3.10

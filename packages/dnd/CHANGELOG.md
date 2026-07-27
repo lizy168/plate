@@ -1,5 +1,18 @@
 # @platejs/dnd
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Fix cross-editor multi-block drops so every selected block is inserted before
+  the source blocks are removed.
+
+  Keep the edge scroller reactive to plugin store state.
+  Preserve plugin API inference in typed component integrations and expose
+  DOM-compatible drag references.
+
+  Remove the exported `getNewDirection` helper.
+
 ## 53.1.0
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @udecode/react-hotkeys
 
+## 54.0.0-beta.2
+
+### Patch Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Fix callback dependency updates, disabled listener cleanup, and readonly key combinations
+
 ## 52.0.11
 
 ### Patch Changes

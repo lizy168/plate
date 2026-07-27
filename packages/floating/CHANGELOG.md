@@ -1,5 +1,13 @@
 # @platejs/floating
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Move editor geometry helpers to the Base read and DOM APIs, restrict `useVirtualFloating` to virtual references, and prevent toolbar effect loops
+
+  **Migration:** Remove type arguments from `useVirtualFloating`; it always returns a virtual-reference floating result.
+
 ## 53.0.0
 
 ## 52.3.10

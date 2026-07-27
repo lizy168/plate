@@ -1,5 +1,22 @@
 # @platejs/math
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Compose `insertEquation` and `insertInlineEquation` inside `editor.update`
+  transactions and register equation properties in compiled schemas. The inline
+  equation plugin and command identity is `inlineEquation`; persisted elements
+  remain `inline_equation`.
+
+  ```tsx
+  editor.update((tx) =>
+    insertInlineEquation(tx, editor.getType(KEYS.inlineEquation), {
+      texExpression,
+    })
+  );
+  ```
+
 ## 53.0.0
 
 ## 52.3.10

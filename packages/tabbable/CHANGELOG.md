@@ -1,5 +1,14 @@
 # @platejs/tabbable
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Support HTML and SVG tabbables through the snapshot-aware
+  `editor.read.tabbable.findDestination(options)` query. Accept
+  `FocusableElement` in custom `TabbableEntry` values and remove the standalone
+  `findTabDestination` helper.
+
 ## 53.0.0
 
 ## 52.3.10

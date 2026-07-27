@@ -1,5 +1,18 @@
 # @platejs/docx-serializer
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) –
+
+  - Remove unused DOCX list-conversion utilities
+  - Avoid repeated RTF image parsing during import
+  - Normalize DOCX HTML through the flat `parsers.html.transformData` hook before
+    schema-owned HTML codecs decode nodes and properties
+
+  **Migration:** Remove direct imports of `cleanDocxListElementsToList`, `docxListToList`, `getDocxListNode`, and `isDocxOl`; `DocxPlugin` handles DOCX list import.
+
 ## 53.0.0
 
 ## 52.3.10

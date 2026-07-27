@@ -1,5 +1,20 @@
 # @platejs/date
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) –
+
+  - Move date insertion to `editor.update.date.insert(options)`
+  - Register date element properties in compiled schemas
+  - Remove the standalone `insertDate` and unused `isPointNextToNode` helpers
+
+  **Migration:** Replace `insertDate(editor, options)` with
+  `editor.update.date.insert(options)` or
+  `editor.plugin(BaseDatePlugin).update.insert(options)`. Use Plite point and
+  node reads directly for custom adjacency checks.
+
 ## 53.0.0
 
 ### Patch Changes

@@ -1,5 +1,25 @@
 # @platejs/combobox
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) –
+
+  - Handle trigger-combobox insertion through the typed `insertText` command
+  - Keep transient collaboration metadata on inserted combobox inputs
+  - Rename `TriggerComboboxPluginOptions` to `TriggerComboboxPluginState`
+
+  **Migration:** Replace `withTriggerCombobox` with
+  `createTriggerComboboxExtension` in the plugin constructor:
+
+  ```ts
+  const BasePlugin = createBasePlugin({
+    extension: (context) => createTriggerComboboxExtension(context),
+    // ...
+  });
+  ```
+
 ## 53.0.0
 
 ## 52.3.10

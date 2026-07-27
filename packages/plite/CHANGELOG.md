@@ -1,5 +1,39 @@
 # plite
 
+## 54.0.0-beta.2
+
+### Major Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) –
+
+  - Add immutable `TransactionSpec` and versioned `DocumentChange` APIs for atomic, serializable updates, with explicit primary and named-root changes and no public primary-root sentinel
+  - Compile closed schemas from extension `schema` declarations with shared `property.*` laws, structural content fitting, stable identity, and typed element, group, root, and property queries
+  - Define literal string domains with `property.enum(...)`
+  - Bind structural slice fitting to each compiled schema revision through one private, immutable fitter artifact
+  - Publish derived schema identities as `{ kind: 'derived', fingerprint }` and application-named lineage as `{ kind: 'named', id, version, fingerprint }`; fingerprints cover compiled semantics only
+  - Report schema failures through `EditorSchemaValidationError` with root, path, node, property, and contributor provenance
+  - Add immutable `{ content, openStart, openEnd, roots? }` `ContentSlice` values with contextual `state.slice` fitting, closed `fragment.replace`, open `slice.replace`, and detached-parent `fitContent`
+  - Carry element-owned named roots through content slices, enforce one owner for exclusive roots, preserve shared aliases, remap copies deterministically, and apply owner/root cleanup, cut, undo, and redo atomically
+  - Reconfigure extension slots and install dynamic extensions atomically, requiring an explicit document migration when the candidate schema rejects the current document
+  - Define semantic commands with `defineCommand` and register pure `false | TransactionSpec` handlers through extension `commands: ({ handle, around }) => [...]` factories
+  - Dispatch command-backed updates through immutable transaction specs, including extension-aware `state.transaction(...)` builders and `tx.command`
+  - Expose frozen snapshot identities through `snapshot.index.entries()`, `idAt()`, and `pathOf()` with bounded lazy structural mapping
+  - Store pending insertion marks only on collapsed text selections and preserve earlier writes across composed commands
+  - Delete the exact selected node when Backspace or Delete targets a serializable `NodeSelection`, then place a text selection at the nearest surviving sibling
+  - Let extensions register serializable selection kinds with validation, mapping, range enumeration, replacement, and DOM projection hooks
+  - Publish one-shot `editor.read.*` and `editor.update.*` APIs with callback forms for grouped work
+  - Keep state-backed read methods available inside active and speculative transactions without exposing them as one-shot editor updates
+  - Add document replacement, block-relative insertion, live location targets, property matchers, and explicit selection predicates
+  - Replace the complete serializable document solely through `tx.value.replace({ children, roots, meta, selection })`; remove omitted roots, reset omitted persisted meta, and clear omitted selection
+  - Add explicit document repair and mutually exclusive mark toggles
+  - Initialize editors synchronously through `initialValue` or an editor-context callback and publish non-cancellable commit contexts with the resulting immutable snapshot
+  - Derive complete raw-schema identity when `id` and `version` are omitted, and expose a non-null derived or named identity from `editor.read.schema.identity()`
+  - Freeze pure descriptor namespaces and infer custom property values from inline `validate` predicates paired with a positive-integer `validationVersion`
+
+  **Migration:** Replace `@platejs/slate` with `@platejs/plite` and migrate Slate
+  transforms and operations to `editor.read`, `editor.update`, or active
+  transaction APIs.
+
 ## 0.124.1
 
 ### Patch Changes
@@ -212,135 +246,135 @@
   export interface BaseEditor {
     // Core state.
 
-    children: Descendant[]
-    selection: Selection
-    operations: Operation[]
-    marks: EditorMarks | null
+    children: Descendant[];
+    selection: Selection;
+    operations: Operation[];
+    marks: EditorMarks | null;
 
     // Overrideable core methods.
 
-    apply: (operation: Operation) => void
-    getDirtyPaths: (operation: Operation) => Path[]
-    getFragment: () => Descendant[]
-    isElementReadOnly: (element: Element) => boolean
-    isSelectable: (element: Element) => boolean
-    markableVoid: (element: Element) => boolean
+    apply: (operation: Operation) => void;
+    getDirtyPaths: (operation: Operation) => Path[];
+    getFragment: () => Descendant[];
+    isElementReadOnly: (element: Element) => boolean;
+    isSelectable: (element: Element) => boolean;
+    markableVoid: (element: Element) => boolean;
     normalizeNode: (
       entry: NodeEntry,
       options?: { operation?: Operation }
-    ) => void
-    onChange: (options?: { operation?: Operation }) => void
+    ) => void;
+    onChange: (options?: { operation?: Operation }) => void;
     shouldNormalize: ({
       iteration,
       dirtyPaths,
       operation,
     }: {
-      iteration: number
-      initialDirtyPathsLength: number
-      dirtyPaths: Path[]
-      operation?: Operation
-    }) => boolean
+      iteration: number;
+      initialDirtyPathsLength: number;
+      dirtyPaths: Path[];
+      operation?: Operation;
+    }) => boolean;
 
     // Overrideable core transforms.
 
-    addMark: OmitFirstArg<typeof Editor.addMark>
-    collapse: OmitFirstArg<typeof Transforms.collapse>
-    delete: OmitFirstArg<typeof Transforms.delete>
-    deleteBackward: (unit: TextUnit) => void
-    deleteForward: (unit: TextUnit) => void
-    deleteFragment: OmitFirstArg<typeof Editor.deleteFragment>
-    deselect: OmitFirstArg<typeof Transforms.deselect>
-    insertBreak: OmitFirstArg<typeof Editor.insertBreak>
-    insertFragment: OmitFirstArg<typeof Transforms.insertFragment>
-    insertNode: OmitFirstArg<typeof Editor.insertNode>
-    insertNodes: OmitFirstArg<typeof Transforms.insertNodes>
-    insertSoftBreak: OmitFirstArg<typeof Editor.insertSoftBreak>
-    insertText: OmitFirstArg<typeof Transforms.insertText>
-    liftNodes: OmitFirstArg<typeof Transforms.liftNodes>
-    mergeNodes: OmitFirstArg<typeof Transforms.mergeNodes>
-    move: OmitFirstArg<typeof Transforms.move>
-    moveNodes: OmitFirstArg<typeof Transforms.moveNodes>
-    normalize: OmitFirstArg<typeof Editor.normalize>
-    removeMark: OmitFirstArg<typeof Editor.removeMark>
-    removeNodes: OmitFirstArg<typeof Transforms.removeNodes>
-    select: OmitFirstArg<typeof Transforms.select>
+    addMark: OmitFirstArg<typeof Editor.addMark>;
+    collapse: OmitFirstArg<typeof Transforms.collapse>;
+    delete: OmitFirstArg<typeof Transforms.delete>;
+    deleteBackward: (unit: TextUnit) => void;
+    deleteForward: (unit: TextUnit) => void;
+    deleteFragment: OmitFirstArg<typeof Editor.deleteFragment>;
+    deselect: OmitFirstArg<typeof Transforms.deselect>;
+    insertBreak: OmitFirstArg<typeof Editor.insertBreak>;
+    insertFragment: OmitFirstArg<typeof Transforms.insertFragment>;
+    insertNode: OmitFirstArg<typeof Editor.insertNode>;
+    insertNodes: OmitFirstArg<typeof Transforms.insertNodes>;
+    insertSoftBreak: OmitFirstArg<typeof Editor.insertSoftBreak>;
+    insertText: OmitFirstArg<typeof Transforms.insertText>;
+    liftNodes: OmitFirstArg<typeof Transforms.liftNodes>;
+    mergeNodes: OmitFirstArg<typeof Transforms.mergeNodes>;
+    move: OmitFirstArg<typeof Transforms.move>;
+    moveNodes: OmitFirstArg<typeof Transforms.moveNodes>;
+    normalize: OmitFirstArg<typeof Editor.normalize>;
+    removeMark: OmitFirstArg<typeof Editor.removeMark>;
+    removeNodes: OmitFirstArg<typeof Transforms.removeNodes>;
+    select: OmitFirstArg<typeof Transforms.select>;
     setNodes: <T extends Node>(
       props: Partial<T>,
       options?: {
-        at?: Location
-        match?: NodeMatch<T>
-        mode?: MaximizeMode
-        hanging?: boolean
-        split?: boolean
-        voids?: boolean
-        compare?: PropsCompare
-        merge?: PropsMerge
+        at?: Location;
+        match?: NodeMatch<T>;
+        mode?: MaximizeMode;
+        hanging?: boolean;
+        split?: boolean;
+        voids?: boolean;
+        compare?: PropsCompare;
+        merge?: PropsMerge;
       }
-    ) => void
-    setNormalizing: OmitFirstArg<typeof Editor.setNormalizing>
-    setPoint: OmitFirstArg<typeof Transforms.setPoint>
-    setSelection: OmitFirstArg<typeof Transforms.setSelection>
-    splitNodes: OmitFirstArg<typeof Transforms.splitNodes>
-    unsetNodes: OmitFirstArg<typeof Transforms.unsetNodes>
-    unwrapNodes: OmitFirstArg<typeof Transforms.unwrapNodes>
-    withoutNormalizing: OmitFirstArg<typeof Editor.withoutNormalizing>
-    wrapNodes: OmitFirstArg<typeof Transforms.wrapNodes>
+    ) => void;
+    setNormalizing: OmitFirstArg<typeof Editor.setNormalizing>;
+    setPoint: OmitFirstArg<typeof Transforms.setPoint>;
+    setSelection: OmitFirstArg<typeof Transforms.setSelection>;
+    splitNodes: OmitFirstArg<typeof Transforms.splitNodes>;
+    unsetNodes: OmitFirstArg<typeof Transforms.unsetNodes>;
+    unwrapNodes: OmitFirstArg<typeof Transforms.unwrapNodes>;
+    withoutNormalizing: OmitFirstArg<typeof Editor.withoutNormalizing>;
+    wrapNodes: OmitFirstArg<typeof Transforms.wrapNodes>;
 
     // Overrideable core queries.
 
     above: <T extends Ancestor>(
       options?: EditorAboveOptions<T>
-    ) => NodeEntry<T> | undefined
-    after: OmitFirstArg<typeof Editor.after>
-    before: OmitFirstArg<typeof Editor.before>
-    edges: OmitFirstArg<typeof Editor.edges>
-    elementReadOnly: OmitFirstArg<typeof Editor.elementReadOnly>
-    end: OmitFirstArg<typeof Editor.end>
-    first: OmitFirstArg<typeof Editor.first>
-    fragment: OmitFirstArg<typeof Editor.fragment>
-    getMarks: OmitFirstArg<typeof Editor.marks>
-    hasBlocks: OmitFirstArg<typeof Editor.hasBlocks>
-    hasInlines: OmitFirstArg<typeof Editor.hasInlines>
-    hasPath: OmitFirstArg<typeof Editor.hasPath>
-    hasTexts: OmitFirstArg<typeof Editor.hasTexts>
-    isBlock: OmitFirstArg<typeof Editor.isBlock>
-    isEdge: OmitFirstArg<typeof Editor.isEdge>
-    isEmpty: OmitFirstArg<typeof Editor.isEmpty>
-    isEnd: OmitFirstArg<typeof Editor.isEnd>
-    isInline: OmitFirstArg<typeof Editor.isInline>
-    isNormalizing: OmitFirstArg<typeof Editor.isNormalizing>
-    isStart: OmitFirstArg<typeof Editor.isStart>
-    isVoid: OmitFirstArg<typeof Editor.isVoid>
-    last: OmitFirstArg<typeof Editor.last>
-    leaf: OmitFirstArg<typeof Editor.leaf>
+    ) => NodeEntry<T> | undefined;
+    after: OmitFirstArg<typeof Editor.after>;
+    before: OmitFirstArg<typeof Editor.before>;
+    edges: OmitFirstArg<typeof Editor.edges>;
+    elementReadOnly: OmitFirstArg<typeof Editor.elementReadOnly>;
+    end: OmitFirstArg<typeof Editor.end>;
+    first: OmitFirstArg<typeof Editor.first>;
+    fragment: OmitFirstArg<typeof Editor.fragment>;
+    getMarks: OmitFirstArg<typeof Editor.marks>;
+    hasBlocks: OmitFirstArg<typeof Editor.hasBlocks>;
+    hasInlines: OmitFirstArg<typeof Editor.hasInlines>;
+    hasPath: OmitFirstArg<typeof Editor.hasPath>;
+    hasTexts: OmitFirstArg<typeof Editor.hasTexts>;
+    isBlock: OmitFirstArg<typeof Editor.isBlock>;
+    isEdge: OmitFirstArg<typeof Editor.isEdge>;
+    isEmpty: OmitFirstArg<typeof Editor.isEmpty>;
+    isEnd: OmitFirstArg<typeof Editor.isEnd>;
+    isInline: OmitFirstArg<typeof Editor.isInline>;
+    isNormalizing: OmitFirstArg<typeof Editor.isNormalizing>;
+    isStart: OmitFirstArg<typeof Editor.isStart>;
+    isVoid: OmitFirstArg<typeof Editor.isVoid>;
+    last: OmitFirstArg<typeof Editor.last>;
+    leaf: OmitFirstArg<typeof Editor.leaf>;
     levels: <T extends Node>(
       options?: EditorLevelsOptions<T>
-    ) => Generator<NodeEntry<T>, void, undefined>
+    ) => Generator<NodeEntry<T>, void, undefined>;
     next: <T extends Descendant>(
       options?: EditorNextOptions<T>
-    ) => NodeEntry<T> | undefined
-    node: OmitFirstArg<typeof Editor.node>
+    ) => NodeEntry<T> | undefined;
+    node: OmitFirstArg<typeof Editor.node>;
     nodes: <T extends Node>(
       options?: EditorNodesOptions<T>
-    ) => Generator<NodeEntry<T>, void, undefined>
-    parent: OmitFirstArg<typeof Editor.parent>
-    path: OmitFirstArg<typeof Editor.path>
-    pathRef: OmitFirstArg<typeof Editor.pathRef>
-    pathRefs: OmitFirstArg<typeof Editor.pathRefs>
-    point: OmitFirstArg<typeof Editor.point>
-    pointRef: OmitFirstArg<typeof Editor.pointRef>
-    pointRefs: OmitFirstArg<typeof Editor.pointRefs>
-    positions: OmitFirstArg<typeof Editor.positions>
+    ) => Generator<NodeEntry<T>, void, undefined>;
+    parent: OmitFirstArg<typeof Editor.parent>;
+    path: OmitFirstArg<typeof Editor.path>;
+    pathRef: OmitFirstArg<typeof Editor.pathRef>;
+    pathRefs: OmitFirstArg<typeof Editor.pathRefs>;
+    point: OmitFirstArg<typeof Editor.point>;
+    pointRef: OmitFirstArg<typeof Editor.pointRef>;
+    pointRefs: OmitFirstArg<typeof Editor.pointRefs>;
+    positions: OmitFirstArg<typeof Editor.positions>;
     previous: <T extends Node>(
       options?: EditorPreviousOptions<T>
-    ) => NodeEntry<T> | undefined
-    range: OmitFirstArg<typeof Editor.range>
-    rangeRef: OmitFirstArg<typeof Editor.rangeRef>
-    rangeRefs: OmitFirstArg<typeof Editor.rangeRefs>
-    start: OmitFirstArg<typeof Editor.start>
-    string: OmitFirstArg<typeof Editor.string>
-    unhangRange: OmitFirstArg<typeof Editor.unhangRange>
-    void: OmitFirstArg<typeof Editor.void>
+    ) => NodeEntry<T> | undefined;
+    range: OmitFirstArg<typeof Editor.range>;
+    rangeRef: OmitFirstArg<typeof Editor.rangeRef>;
+    rangeRefs: OmitFirstArg<typeof Editor.rangeRefs>;
+    start: OmitFirstArg<typeof Editor.start>;
+    string: OmitFirstArg<typeof Editor.string>;
+    unhangRange: OmitFirstArg<typeof Editor.unhangRange>;
+    void: OmitFirstArg<typeof Editor.void>;
   }
   ```
 
@@ -387,10 +421,10 @@
     dirtyPaths,
     operation,
   }: {
-    iteration: number
-    dirtyPaths: Path[]
-    operation?: Operation
-  }) => boolean
+    iteration: number;
+    dirtyPaths: Path[];
+    operation?: Operation;
+  }) => boolean;
   ```
 
   - `editor.onChange` signature change: `(options?: { operation?: Operation }) => void` where `operation` is triggering the function.

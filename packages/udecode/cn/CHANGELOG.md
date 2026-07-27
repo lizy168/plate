@@ -1,5 +1,11 @@
 # @udecode/cn
 
+## 54.0.0-beta.2
+
+### Patch Changes
+
+- [#5036](https://github.com/udecode/plate/pull/5036) by [@zbeyens](https://github.com/zbeyens) – Fix prop, variant, and ref inference for component wrappers
+
 ## 52.3.4
 
 ### Patch Changes
