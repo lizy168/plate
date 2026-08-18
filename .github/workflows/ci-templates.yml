@@ -49,15 +49,15 @@ jobs:
         run: |
           echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
       - uses: actions/cache@v4
-        name: ♻️ Setup pnpm cache
+        name: 鈾伙笍 Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: 📥 Install
+      - name: 馃摜 Install
         run: pnpm install --no-frozen-lockfile
 
-      - name: 🏗 Run build
+      - name: 馃彈 Run build
         run: pnpm build
